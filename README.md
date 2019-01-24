@@ -4,7 +4,7 @@ Kyungs Study
 ================
 
 # Next Step
-## Author choiyk
+Author choiyk
 
 ### 목차
 #### 2. 문자열 계산시 구현을 통한 테스트와 리팩토링
