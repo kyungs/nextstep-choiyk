@@ -1,67 +1,89 @@
 package step2;
 
+/*
+ * 주어진 문자열의 숫자를 계산하는 계산기 Util class
+ * @author choiyk
+ */
 public class StringCalculator {
 
-	//계산할 문자열
-	private String string;
+	//util class를 위해 생성자...?
+	private StringCalculator() {}
 
-	//커스텀 구분자
-	private String separator;
-
-	//생성자
-	public StringCalculator() {
-		this.separator = ",|:";
-		this.string = null;
+	/*
+	 * 더하기 계산 결과를 반환하는 메소드
+	 * @param 계산할 문자열
+	 * @return 계산 결과
+	 */
+	public static int add(String text){
+		if(isNull(text)) return 0;
+		return sum(toIntArray(split(text)));
 	}
 
-	public StringCalculator(String s) {
-		this.separator = ",|:";
-		this.string = s;
+	/*
+	 * 빈 문자열인지 검사
+	 * @param 계산할 문자열
+	 * @return 문자열이 빈 문자열이면 true 반환
+	 */
+	private static boolean isNull(String text) {
+		return 	text==null || text.isEmpty();
 	}
 
-	//빈 문자열인지
-	public boolean isNull() {
-		return 	this.string==null || this.string.isEmpty();
+	/*
+	 * 문자 배열을 int 배열로 변환
+	 * @param 문자 배열
+	 * @return int 배열
+	 */
+	private static int[] toIntArray(String[] args) {
+		int[] newArr = new int[args.length];
+		for(int i=0 ;i<args.length; i++)
+			newArr[i] = Integer.parseInt(args[i]);
+		return newArr;
 	}
 
-	//커스텀 문자열이 있는지 확인
-	public boolean isCustomSeparator() {
-		if(this.string.startsWith("//")) return true;
-		return false;
+	/*
+	 * 문자열 자르기
+	 * @param 계산할 문자열
+	 * @return 숫자인 문자들의 배열
+	 */
+	private static String[] split(String text) {
+		String separator = getSeparator(text);
+		if(text.startsWith("//"))
+			text = text.substring(text.indexOf("\n")+1);
+		return text.split(separator);
 	}
 
-	//커스텀 문자열이 있으면 this.separator에 저장, 커스텀 문자열부분 자르고 this.operand에 저장
-	public void setCustomSeparator() {
-		String temp = this.string;
-		this.separator = temp.substring(2, 3);
-		this.string = temp.substring(temp.indexOf("\n")+1);
+	/*
+	 * 구분자 구하기
+	 * @param 계산할 문자열
+	 * @return 구분자
+	 */
+	private static String getSeparator(String text) {
+		if(text.startsWith("//"))
+			return text.substring(2, text.indexOf("\n"));
+		return ",|:";
 	}
 
-	//음수인지 확인
-	public int isNegative(int num){
+	/*
+	 * 음수인지 확인
+	 * @param int형 숫자
+	 * @return int형 숫자
+	 * @exception 음수이면 RuntimeException
+	 */
+	private static int isNegative(int num){
 		if(num<0)  throw new RuntimeException();
 		return num;
 	}
 
-	//계산 결과를 반환하는 메소드
-	public int add(){
-		if(this.isNull()) return 0;
-		if(this.isCustomSeparator())
-			this.setCustomSeparator();
-		String[] ops = this.string.split(this.separator);
+	/*
+	 * 숫자 배열의 합을 반환하는 메소드
+	 * @param int형 배열
+	 * @return int
+	 */
+	private static int sum(int[] args) {
 		int sum=0;
-		for(String o : ops)
-			sum += this.isNegative(Integer.parseInt(o));
+		for(int n : args)
+			sum += isNegative(n);
 		return sum;
-	}
-
-	//Getter
-	public String getOperand() {
-		return this.string;
-	}
-
-	public String getSeparator() {
-		return this.separator;
 	}
 
 }
