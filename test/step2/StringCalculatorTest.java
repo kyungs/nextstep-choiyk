@@ -10,7 +10,7 @@ public class StringCalculatorTest {
 
 	@Test
 	public void 빈문자열이면true리턴() {
-		StringCalculator sc = new StringCalculator(" ");
+		StringCalculator sc = new StringCalculator();
 		boolean result = sc.isNull();
 		assertEquals(result, true);
 	}
@@ -47,21 +47,21 @@ public class StringCalculatorTest {
 	@Test
 	public void 계산테스트() {
 		StringCalculator sc = new StringCalculator("1,2:3");
-		int result  = sc.Calculation();
+		int result  = sc.add();
 		assertEquals(result, 6);
 	}
 
 	@Test
 	public void 커스텀구분자계산테스트() {
 		StringCalculator sc = new StringCalculator("//;\n1;2;3");
-		int result  = sc.Calculation();
+		int result  = sc.add();
 		assertEquals(result, 6);
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void 음수테스트() {
 		StringCalculator sc = new StringCalculator("//;\n-1;2;3");
-		sc.Calculation();
+		sc.add();
 	}
 
 }
