@@ -1,9 +1,7 @@
 ![logo](https://github.com/kyungs/nextstep-choiyk/blob/master/itdaLogoNextStep.PNG)
 
-Kyungs Study
-================
-
 # Next Step
+Kyungs Study
 Author choiyk
 
 ### 목차
